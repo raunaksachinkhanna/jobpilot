@@ -5,10 +5,10 @@ import os
 
 app = FastAPI(title="JobPilot API", version="0.1.0")
 
-allowed_origins = ["http://localhost:3000"]
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origins=[o.strip() for o in allowed_origins],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
